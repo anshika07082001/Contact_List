@@ -3,16 +3,12 @@ import React from "react";
 import SearchIcon from "@mui/icons-material/Search";
 import { Box } from "@mui/system";
 import { Link, Outlet } from "react-router-dom";
-import DeleteIcon from "@mui/icons-material/Delete";
-import EditIcon from "@mui/icons-material/Edit";
 import { TypedUseSelectorHook, useSelector } from "react-redux";
 import { stateProps } from "../type/Type";
 
 const ContactLists = () => {
   const useAppSelector: TypedUseSelectorHook<stateProps> = useSelector;
   var state = useAppSelector((state) => state.contactSlice);
-
-  const editObj = () => {};
 
   return (
     <Box
@@ -25,6 +21,7 @@ const ContactLists = () => {
         sx={{
           borderRight: "1px solid #d4d4d4",
           background: "#f7f7f7",
+          position: "fixed",
         }}
       >
         <Box
@@ -53,7 +50,7 @@ const ContactLists = () => {
             </Button>
           </Box>
         </Box>
-        <Box>
+        <Box sx={{ maxHeight: "90vh", overflowY: "scroll" }}>
           {state.contacts.map((item: any, i: number) => {
             return (
               <Box
@@ -66,13 +63,7 @@ const ContactLists = () => {
                   padding: "15px",
                 }}
               >
-                <Link to={`contactlists/${item.id}`}>{item.maidenName}</Link>
-                <div>
-                  {/* <Link to={`contactlists/${item.id}/edit`}>
-                    <EditIcon onClick={editObj} />
-                  </Link> */}
-                  <DeleteIcon />
-                </div>
+                <Link to={`contactlists/${item.id}`}>{item.firstName} {item.lastName}</Link>
               </Box>
             );
           })}

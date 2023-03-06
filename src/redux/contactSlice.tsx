@@ -4,7 +4,7 @@ import { contactSliceProps } from "../type/Type";
 
 var initialState: contactSliceProps = {
   contacts: [],
-  contactObj:{}
+  contactObj: {},
 };
 
 export const contactsFetch = createAsyncThunk(
@@ -19,9 +19,21 @@ const contactSlice = createSlice({
   name: "contacts",
   initialState,
   reducers: {
-    contactObj:(state,action)=>{
-        state.contactObj=action.payload
-    }
+    contactObj: (state, action) => {
+      state.contactObj = state.contacts[action.payload];
+    },
+    editContact: (state, action) => {
+      state.contactObj = state.contacts[action.payload];
+    },
+    updateContact: (state, action) => {
+      state.contacts[action.payload.index].firstName = action.payload.firstname;
+      state.contacts[action.payload.index].lastName = action.payload.lastname;
+      state.contacts[action.payload.index].email = action.payload.email;
+    },
+    delContact: (state, action) => {
+      state.contacts.splice(action.payload.index, 1);
+      state.contactObj = {};
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -33,6 +45,7 @@ const contactSlice = createSlice({
   },
 });
 
-export const {contactObj}=contactSlice.actions
+export const { contactObj, editContact, updateContact, delContact } =
+  contactSlice.actions;
 
 export default contactSlice.reducer;
