@@ -1,23 +1,38 @@
-import React, { useEffect, useState } from "react";
-import { Route, Routes } from "react-router-dom";
-import ContactComp from "./ContactComp";
+import React, { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { contactsFetch } from "../redux/contactSlice";
+import ContactCard from "./ContactCard";
+import ContactLists from "./ContactLists";
+import EditContact from "./EditContact";
 
 const Main = () => {
-  const [contacts, setContacts] = useState([]);
+  var dispatch = useDispatch();
+
   useEffect(() => {
-    fetch("https://dummyjson.com/users")
-      .then((res) => res.json())
-      .then((res) => {
-        console.log(res.users);
-        setContacts(res.users);
-      });
+    dispatch<any>(contactsFetch());
   }, []);
+
+  const router = createBrowserRouter([
+    {
+      path: "/",
+      element: <ContactLists />,
+      children: [
+        {
+          path: "contactlists/:userId",
+          element: <ContactCard />,
+        },
+        {
+          path: "contactlists/:userId/edit",
+          element: <EditContact />,
+        },
+      ],
+    },
+  ]);
 
   return (
     <div className="container">
-      <Routes>
-        <Route path="/" element={<ContactComp contacts={contacts} />} />
-      </Routes>
+      <RouterProvider router={router} />
     </div>
   );
 };
