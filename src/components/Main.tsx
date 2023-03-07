@@ -13,6 +13,7 @@ const Main = () => {
     dispatch<any>(contactsFetch());
   }, []);
 
+  // define the object for routing
   const router = createBrowserRouter([
     {
       path: "/",

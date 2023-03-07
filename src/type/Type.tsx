@@ -4,20 +4,11 @@ export type contactsProps = {
 
 export type contactSliceProps = {
   contacts: any;
-  contactObj:any
+  contactObj: any;
+  loading: boolean;
+  error:string
 };
 
-export type contactObj = {
-  email: string;
-  firstName: string;
-  gender: string;
-  id: number;
-  image: string;
-  lastName: string;
-  phone: string;
-  username: string;
+export type stateProps = {
+  contactSlice: contactSliceProps;
 };
-
-export type stateProps ={
-  contactSlice:contactSliceProps
-}

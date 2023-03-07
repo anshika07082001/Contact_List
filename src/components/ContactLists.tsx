@@ -51,6 +51,7 @@ const ContactLists = () => {
           </Box>
         </Box>
         <Box sx={{ maxHeight: "90vh", overflowY: "scroll" }}>
+          {/* rendering of contact lists */}
           {state.contacts.map((item: any, i: number) => {
             return (
               <Box

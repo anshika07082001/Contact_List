@@ -9,21 +9,27 @@ import { Button, Typography } from "@mui/material";
 
 const ContactCard = () => {
   const useAppSelector: TypedUseSelectorHook<stateProps> = useSelector;
+  // state for storing the data from contact slice
   var state = useAppSelector((state) => state.contactSlice);
+  // dispatch method used to dispatch the functions to perform particular functionality
   var dispatch = useDispatch();
+  // params getting from contactLists component
   let { userId } = useParams();
+  // useNavigate used to navigate to the components
+  var navigate = useNavigate();
 
+  // useEffect runs on the dependency of userId params
   useEffect(() => {
     if (userId !== undefined) {
       if (state.contacts.length > 0) {
-        const id = (ele: any) => ele.id === userId;
+        const id = (ele: any) => ele.id == userId;
         var index = state.contacts.findIndex(id);
         dispatch(contactObj(index));
       }
     }
   }, [userId]);
-  var navigate = useNavigate();
 
+  // function deletes the selected contact and dispatches the function delContact
   const deleteContact = () => {
     state.contacts.map((item: any, index: number) => {
       if (item.id === state.contactObj.id) {
@@ -35,20 +41,30 @@ const ContactCard = () => {
 
   return (
     <>
+      {/* condition checks for object is empty or not */}
       {Object.keys(state.contactObj).length > 0 ? (
         <Box
           display="flex"
           flexDirection="row"
           maxHeight="300px"
           minWidth="200px"
-          paddingLeft="500px"
+          marginLeft="450px"
+          marginTop="20px"
+          boxShadow="rgba(99, 99, 99, 0.2) 0px 2px 8px 0px"
+          padding="10px"
+          borderRadius='5px'
         >
           <img
             src={state.contactObj.image}
             alt=""
             style={{ height: "200px", width: "200px" }}
           />
-          <Box display="flex" flexDirection="column" alignItems="flex-start">
+          <Box
+            display="flex"
+            flexDirection="column"
+            alignItems="flex-start"
+            minWidth="200px"
+          >
             <Box display="flex" flexDirection="row" alignItems="center">
               <h2>
                 {state.contactObj.firstName} {state.contactObj.lastName}
@@ -57,7 +73,10 @@ const ContactCard = () => {
             </Box>
             <h2>{state.contactObj.maidenName}</h2>
             <p>{state.contactObj.email}</p>
-            <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+            <Box
+              sx={{ display: "flex", justifyContent: "space-between" }}
+              minWidth="150px"
+            >
               <Link to={`/contactlists/${state.contactObj.id}/edit`}>
                 <Button sx={{ color: "blueviolet", border: "1px solid grey" }}>
                   Edit

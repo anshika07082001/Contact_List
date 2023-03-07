@@ -12,10 +12,12 @@ const EditContact = () => {
   var dispatch = useDispatch();
   var navigate = useNavigate();
   var { userId } = useParams();
+  // states for form fields
   var [firstname, setFirstName] = useState("");
   var [lastname, setLastName] = useState("");
   var [email, setEmail] = useState("");
 
+  // function runs on the dependency of userId and dispatches the editContact function
   useEffect(() => {
     if (userId !== undefined) {
       if (state.contacts.length > 0) {
@@ -26,7 +28,7 @@ const EditContact = () => {
     }
     setFunc();
   }, [userId]);
-
+  // function sets the initial states of the input fields
   const setFunc = () => {
     if (Object.keys(state.contactObj).length > 0) {
       setFirstName(state.contactObj.firstName);
@@ -36,7 +38,7 @@ const EditContact = () => {
       navigate("/");
     }
   };
-
+  // on changehandler for nput fields
   const changeHandler = (
     label: string,
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -51,7 +53,7 @@ const EditContact = () => {
       setEmail(e.currentTarget.value);
     }
   };
-
+  // btn click function for update and dispatches the updateContact function
   const upadte = () => {
     const id = (ele: any) => ele.id == state.contactObj.id;
     var index = state.contacts.findIndex(id);
@@ -68,8 +70,15 @@ const EditContact = () => {
 
   return (
     <>
+      {/* condtion checks for obj is empty or not */}
       {Object.keys(state.contactObj).length > 0 ? (
-        <Box minWidth="400px" paddingLeft="500px">
+        <Box
+          minWidth="400px"
+          marginLeft="500px"
+          marginTop="20px"
+          padding='20px'
+          boxShadow="rgba(99, 99, 99, 0.2) 0px 2px 8px 0px"
+        >
           <Typography variant="h4">Edit Contact</Typography>
           <Box sx={{ display: "flex", flexDirection: "column", gap: "1.5em" }}>
             <TextField
